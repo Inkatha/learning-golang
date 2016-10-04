@@ -14,6 +14,7 @@ func postScrape() {
     doc, err := goquery.NewDocument("http://jonathanmh.com")
     if (err != nil) {
         log.Fatal(err)
+        
     }
 
     // use CSS selector found with the browser inspector
