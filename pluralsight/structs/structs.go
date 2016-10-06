@@ -10,6 +10,7 @@ func main() {
 		Rating float64
 	}
 
+	// Ways to declare a variable of type struct.
 	// var DockerDeepDive courseMeta
 	// DockerDeepDive := new(courseMeta)
 
