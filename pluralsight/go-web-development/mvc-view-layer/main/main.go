@@ -14,7 +14,7 @@ func main() {
 
 	http.HandleFunc("/",
 		func(w http.ResponseWriter, req *http.Request) {
-			requestedFile := req.URL.Path[1:] // Remove forward slash
+			requestedFile := req.URL.Path[1:]
 			template :=
 				templates.Lookup(requestedFile + ".html")
 
@@ -27,6 +27,8 @@ func main() {
 				context = viewmodels.GetCategories()
 			case "products":
 				context = viewmodels.GetProducts()
+			case "product":
+				context = viewmodels.GetProduct()
 			}
 
 			if template != nil {
@@ -44,7 +46,6 @@ func main() {
 
 func serveResource(w http.ResponseWriter, req *http.Request) {
 	path := "public" + req.URL.Path
-
 	var contentType string
 	if strings.HasSuffix(path, ".css") {
 		contentType = "text/css"
@@ -75,8 +76,8 @@ func populateTemplates() *template.Template {
 	defer templateFolder.Close()
 
 	templatePathsRaw, _ := templateFolder.Readdir(-1)
-	templatePaths := new([]string)
 
+	templatePaths := new([]string)
 	for _, pathInfo := range templatePathsRaw {
 		if !pathInfo.IsDir() {
 			*templatePaths = append(*templatePaths,
