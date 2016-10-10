@@ -6,29 +6,40 @@ type Products struct {
 	Products []Product
 }
 
-func GetProducts() Products {
+func GetProducts(id int) Products {
 	var result Products
 	result.Active = "shop"
-	result.Title = "Lemonade Stand Society - Juice Shop"
+	var shopName string
+	switch id {
+	case 1:
+		shopName = "Juice"
+	case 2:
+		shopName = "Supply"
+	case 3:
+		shopName = "Advertising"
+	}
+	result.Title = "Lemonade Stand Society - " + shopName + " Shop"
 
-	lemonJuice := MakeLemonJuiceProduct()
-	appleJuice := MakeAppleJuiceProduct()
-	watermelonJuice := MakeWatermelonJuiceProduct()
-	kiwiJuice := MakeKiwiJuiceProduct()
-	mangosteenJuice := MakeMangosteenJuiceProduct()
-	orangeJuice := MakeOrangeJuiceProduct()
-	pineappleJuice := MakePineappleJuiceProduct()
-	strawberryJuice := MakeStrawberryJuiceProduct()
+	if id == 1 {
+		lemonJuice := MakeLemonJuiceProduct()
+		appleJuice := MakeAppleJuiceProduct()
+		watermelonJuice := MakeWatermelonJuiceProduct()
+		kiwiJuice := MakeKiwiJuiceProduct()
+		mangosteenJuice := MakeMangosteenJuiceProduct()
+		orangeJuice := MakeOrangeJuiceProduct()
+		pineappleJuice := MakePineappleJuiceProduct()
+		strawberryJuice := MakeStrawberryJuiceProduct()
 
-	result.Products = []Product{
-		lemonJuice,
-		appleJuice,
-		watermelonJuice,
-		kiwiJuice,
-		mangosteenJuice,
-		orangeJuice,
-		pineappleJuice,
-		strawberryJuice,
+		result.Products = []Product{
+			lemonJuice,
+			appleJuice,
+			watermelonJuice,
+			kiwiJuice,
+			mangosteenJuice,
+			orangeJuice,
+			pineappleJuice,
+			strawberryJuice,
+		}
 	}
 
 	return result

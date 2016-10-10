@@ -6,18 +6,28 @@ import (
 	"os"
 	"strings"
 	"text/template"
+
+	"github.com/gorilla/mux"
 )
 
 // Register handles routing for the application
 func Register(templates *template.Template) {
 
+	router := mux.NewRouter()
+
 	hc := new(homeController)
 	hc.template = templates.Lookup("home.html")
-	http.HandleFunc("/home", hc.get)
+	router.HandleFunc("/home", hc.get)
 
-	cc := new(categoriesController)
-	cc.template = templates.Lookup("categories.html")
-	http.HandleFunc("/categories", cc.get)
+	categoriesController := new(categoriesController)
+	categoriesController.template = templates.Lookup("categories.html")
+	router.HandleFunc("/categories", categoriesController.get)
+
+	categoryController := new(categoryController)
+	categoryController.template = templates.Lookup("products.html")
+	router.HandleFunc("/categories/{id}", categoryController.get)
+
+	http.Handle("/", router)
 
 	http.HandleFunc("/img/", serveResource)
 	http.HandleFunc("/css/", serveResource)
