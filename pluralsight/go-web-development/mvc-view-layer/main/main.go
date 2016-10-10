@@ -20,8 +20,13 @@ func main() {
 
 			var context interface{} = nil
 
-			if requestedFile == "home" {
+			switch requestedFile {
+			case "home":
 				context = viewmodels.GetHome()
+			case "categories":
+				context = viewmodels.GetCategories()
+			case "products":
+				context = viewmodels.GetProducts()
 			}
 
 			if template != nil {
