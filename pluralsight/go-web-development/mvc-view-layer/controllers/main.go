@@ -2,40 +2,22 @@ package controllers
 
 import (
 	"bufio"
-	"learning-golang/pluralsight/go-web-development/mvc-view-layer/viewmodels"
 	"net/http"
 	"os"
 	"strings"
 	"text/template"
 )
 
+// Register handles routing for the application
 func Register(templates *template.Template) {
 
-	http.HandleFunc("/",
-		func(w http.ResponseWriter, req *http.Request) {
-			requestedFile := req.URL.Path[1:]
-			template :=
-				templates.Lookup(requestedFile + ".html")
+	hc := new(homeController)
+	hc.template = templates.Lookup("home.html")
+	http.HandleFunc("/home", hc.get)
 
-			var context interface{} = nil
-
-			switch requestedFile {
-			case "home":
-				context = viewmodels.GetHome()
-			case "categories":
-				context = viewmodels.GetCategories()
-			case "products":
-				context = viewmodels.GetProducts()
-			case "product":
-				context = viewmodels.GetProduct()
-			}
-
-			if template != nil {
-				template.Execute(w, context)
-			} else {
-				w.WriteHeader(404)
-			}
-		})
+	cc := new(categoriesController)
+	cc.template = templates.Lookup("categories.html")
+	http.HandleFunc("/categories", cc.get)
 
 	http.HandleFunc("/img/", serveResource)
 	http.HandleFunc("/css/", serveResource)
