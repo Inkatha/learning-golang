@@ -15,9 +15,10 @@ func Register(templates *template.Template) {
 
 	router := mux.NewRouter()
 
-	hc := new(homeController)
-	hc.template = templates.Lookup("home.html")
-	router.HandleFunc("/home", hc.get)
+	// Home route
+	homeController := new(homeController)
+	homeController.template = templates.Lookup("home.html")
+	router.HandleFunc("/", homeController.get)
 
 	categoriesController := new(categoriesController)
 	categoriesController.template = templates.Lookup("categories.html")
@@ -29,7 +30,7 @@ func Register(templates *template.Template) {
 
 	productController := new(productController)
 	productController.template = templates.Lookup("product.html")
-	router.HandleFunc("/products{id}", productController.get)
+	router.HandleFunc("/products/{id}", productController.get)
 
 	http.Handle("/", router)
 
