@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"learning-golang/pluralsight/go-web-development/mvc-view-layer/controllers"
 	"net/http"
 	"os"
@@ -32,7 +33,7 @@ func populateTemplates() *template.Template {
 		}
 	}
 
-	result.ParseFiles(*templatePaths...)
+	fmt.Println(result.ParseFiles(*templatePaths...))
 
 	return result
 }

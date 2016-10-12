@@ -15,10 +15,15 @@ func Register(templates *template.Template) {
 
 	router := mux.NewRouter()
 
-	// Home route
+	// Home route and Login route
 	homeController := new(homeController)
 	homeController.template = templates.Lookup("home.html")
 	router.HandleFunc("/", homeController.get)
+
+	// Login route
+	loginController := new(loginController)
+	loginController.template = templates.Lookup("login.html")
+	router.HandleFunc("/login", loginController.get)
 
 	// Categories route
 	categoriesController := new(categoriesController)

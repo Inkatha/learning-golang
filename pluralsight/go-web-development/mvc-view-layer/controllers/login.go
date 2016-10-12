@@ -6,12 +6,12 @@ import (
 	"text/template"
 )
 
-type homeController struct {
+type loginController struct {
 	template *template.Template
 }
 
-func (home *homeController) get(w http.ResponseWriter, req *http.Request) {
-	vm := viewmodels.GetHome()
+func (login *loginController) get(w http.ResponseWriter, req *http.Request) {
+	vm := viewmodels.GetLogin()
 	w.Header().Add("Context-Type", "text/html")
-	home.template.Execute(w, vm)
+	login.template.Execute(w, vm)
 }
