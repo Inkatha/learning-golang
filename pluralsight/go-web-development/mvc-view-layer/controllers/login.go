@@ -19,6 +19,18 @@ func (login *loginController) get(w http.ResponseWriter, req *http.Request) {
 		password := req.FormValue("password")
 
 		member, err := models.GetMember(email, password)
+
+		if err == nil {
+			session, err := models.CreateSession(member)
+			if err == nil {
+				var cookie http.Cookie
+				cookie.Name = "sessionId"
+				cookie.Value = session.SessionId()
+				responseWriter.Header().Add("Set-Cookie", cookie.String())
+			}
+		} else {
+
+		}
 	}
 
 	login.template.Execute(w, vm)
