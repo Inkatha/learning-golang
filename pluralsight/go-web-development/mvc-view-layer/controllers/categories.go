@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"learning-golang/pluralsight/go-web-development/mvc-view-layer/converters"
+	"learning-golang/pluralsight/go-web-development/mvc-view-layer/models"
 	"learning-golang/pluralsight/go-web-development/mvc-view-layer/viewmodels"
 	"net/http"
 	"strconv"
@@ -13,10 +15,19 @@ type categoriesController struct {
 	template *template.Template
 }
 
-func (categories *categoriesController) get(w http.ResponseWriter, req *http.Request) {
+func (categoryCont *categoriesController) get(w http.ResponseWriter, req *http.Request) {
+	categories := models.GetCategories()
+
+	categoriesVM := []viewmodels.Category{}
+	for _, category := range categories {
+		categoriesVM = append(categoriesVM, converters.ConvertCategoryToViewModel(category))
+	}
+
 	vm := viewmodels.GetCategories()
+	vm.Categories = categoriesVM
+
 	w.Header().Add("Context-Type", "text/html")
-	categories.template.Execute(w, vm)
+	categoryCont.template.Execute(w, vm)
 }
 
 type categoryController struct {
