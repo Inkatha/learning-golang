@@ -13,5 +13,13 @@ type loginController struct {
 func (login *loginController) get(w http.ResponseWriter, req *http.Request) {
 	vm := viewmodels.GetLogin()
 	w.Header().Add("Context-Type", "text/html")
+
+	if req.Method == "POST" {
+		email := req.FormValue("email")
+		password := req.FormValue("password")
+
+		member, err := models.GetMember(email, password)
+	}
+
 	login.template.Execute(w, vm)
 }
